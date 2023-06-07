@@ -13,9 +13,6 @@ const Footer = () => {
             <img className="h-7" src={sportLogo} alt="" />
           </div>
         </div>
-        <p className="text-slate-200">
-          Sportopia Ltd.
-        </p>
         <p>Sportopia: A premier sports institute offering diverse courses taught by renowned instructors. Students can purchase sports courses, and instructors can sell their expertise. Join us today!</p>
       </div>
       <div>
