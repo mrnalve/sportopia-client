@@ -5,6 +5,7 @@ import banner1 from "../../../public/banner1.jpg";
 import banner2 from "../../../public/banner2.jpg";
 import banner3 from "../../../public/banner3.jpg";
 import banner4 from "../../../public/banner4.jpg";
+import { Toaster } from "react-hot-toast";
 
 const Banner = () => {
   return (

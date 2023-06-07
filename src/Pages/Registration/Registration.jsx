@@ -1,22 +1,25 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useForm } from "react-hook-form";
+import google from "../../../public/google.png";
 import { AuthContext } from "../../Authentication/AuthProvider";
-import toast, { Toaster } from 'react-hot-toast';
-
+import toast, { Toaster } from "react-hot-toast";
+import SocialLogin from "../../Shared/SocialLogin/SocialLogin";
 
 const Registration = () => {
   const { createUser, updateUser } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors },
     watch,
   } = useForm();
 
-  //   handle show password
+  //   handle show and hide password
   const handlePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -24,12 +27,28 @@ const Registration = () => {
   const onSubmit = (data) => {
     // call the create user function for registration
     console.log(data);
-    createUser(data.email, data.password).then((result) => {
+    createUser(data.email, data.password)
+      .then((result) => {
         const loggedUser = result.user;
         console.log(loggedUser);
         updateUser(data.name, data.photoUrl)
           .then(() => {
-            toast.success('Sign Up successfully!')
+            const userInfo = { name: data.name, email: data.email };
+            fetch("http://localhost:5000/users", {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+              },
+              body: JSON.stringify(userInfo),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                if (data.insertedId) {
+                  toast.success("Sign Up successfully!");
+                  navigate("/");
+                  reset();
+                }
+              });
           })
           .catch((error) => console.log(error?.message));
       })
@@ -220,9 +239,10 @@ const Registration = () => {
           >
             Register
           </button>
-          <Toaster/>
+          <Toaster />
         </form>
         <div className="flex flex-col items-center justify-between mt-4">
+          <SocialLogin></SocialLogin>
           <Link
             to="/login"
             className="text-sm mt-4 text-blue-500 hover:underline"
