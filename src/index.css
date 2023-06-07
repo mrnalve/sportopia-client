@@ -9,3 +9,16 @@
 #66FCF1 - SKY
 #45A29E - DARK BLUE
 */
+
+.navbar {
+  background-color: #0b0c10;
+  color: #c5c6c7;
+}
+
+.navbar a {
+  color: #66fcf1;
+}
+
+.navbar a:hover {
+  color: #45a29e;
+}
