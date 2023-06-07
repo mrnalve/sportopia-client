@@ -208,9 +208,6 @@ const Registration = () => {
           </button>
         </form>
         <div className="flex flex-col items-center justify-between mt-4">
-          {/* Social login */}
-          {/* ... */}
-
           <Link
             to="/login"
             className="text-sm mt-4 text-blue-500 hover:underline"
