@@ -1,5 +1,5 @@
 import React from "react";
-import { FaChalkboardTeacher, FaHome, FaUsers } from "react-icons/fa";
+import { FaBars, FaChalkboardTeacher, FaHome, FaUsers } from "react-icons/fa";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 
 const Dashboard = () => {
@@ -9,13 +9,13 @@ const Dashboard = () => {
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col items-center justify-center bg-gradient-to-r from-[#0B0C10] to-[rgba(21, 21, 21, 0)]">
-        <Outlet></Outlet>
-        <label
+      <label
           htmlFor="my-drawer-2"
-          className="btn btn-primary drawer-button lg:hidden"
+          className="btn btn-grad text-left drawer-button lg:hidden"
         >
-          Open drawer
+          <FaBars/>
         </label>
+        <Outlet></Outlet>
       </div>
       <div className="drawer-side">
         <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
