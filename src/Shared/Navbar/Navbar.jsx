@@ -1,24 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import "./Navbar.css";
+import sportLogo from "../../../public/soccer-ball.png";
 const Navbar = () => {
-    // list item
-    const menuItems = (
-        <>
-        <li>
-            <Link to={'/'}>Home</Link>
-        </li>
-        <li>
-            <Link to={'/'}>Instructor</Link>
-        </li>
-        <li>
-            <Link to={'/'}>Class</Link>
-        </li>
-        <li>
-            <Link to={'/'}>Dashboard</Link>
-        </li>
-        </>
-    )
+  // list item
+  const menuItems = (
+    <>
+      <li>
+        <Link to={"/"}>Home</Link>
+      </li>
+      <li>
+        <Link to={"/"}>Instructor</Link>
+      </li>
+      <li>
+        <Link to={"/"}>Class</Link>
+      </li>
+      <li>
+        <Link to={"/"}>Dashboard</Link>
+      </li>
+    </>
+  );
   return (
     <div className="navbar bg-base-100 w-full">
       <div className="navbar-start">
@@ -46,12 +47,17 @@ const Navbar = () => {
             {menuItems}
           </ul>
         </div>
-        <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
+        <div className="flex items-center h-5">
+          <span className="text-xl font-extrabold text-white geologica h-5 pr-2 italic">
+            SPORTOPIA
+          </span>
+          <div className="w-24 h-5">
+            <img className="h-7" src={sportLogo} alt="" />
+          </div>
+        </div>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
-        {menuItems}
-        </ul>
+        <ul className="menu menu-horizontal px-1">{menuItems}</ul>
       </div>
       <div className="navbar-end">
         <button className="btn btn-grad text-white">Login</button>

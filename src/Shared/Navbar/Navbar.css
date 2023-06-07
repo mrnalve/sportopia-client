@@ -1,0 +1,15 @@
+.navbar {
+  background-color: #0b0c10;
+  color: #c5c6c7;
+}
+
+.navbar a {
+  /* color: #66fcf1; */
+  color: white;
+  font-family: "Geologica", sans-serif;
+  font-weight: 400;
+}
+
+.navbar a:hover {
+  color: #45a29e;
+}
