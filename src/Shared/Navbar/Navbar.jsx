@@ -9,9 +9,7 @@ const Navbar = () => {
   const handleLogout = (event) => {
     event.preventDefault();
     logout()
-      .then((result) => {
-        console.log(result?.user);
-      })
+      .then(() => {})
       .catch((error) => console.log(error?.message));
   };
   // list item
@@ -74,9 +72,16 @@ const Navbar = () => {
       </div>
       <div className="navbar-end">
         {user ? (
-          <button onClick={handleLogout} className="btn btn-grad text-white">
-            Log out
-          </button>
+          <>
+            <div className="avatar">
+              <div className="w-12 rounded-full">
+                <img title={user?.displayName} src={user.photoURL} />
+              </div>
+            </div>
+            <button onClick={handleLogout} className="btn btn-grad text-white">
+              Log out
+            </button>
+          </>
         ) : (
           <Link to={"/login"}>
             <button className="btn btn-grad text-white">Login</button>

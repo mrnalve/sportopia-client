@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import google from "../../../public/google.png";
+import { AuthContext } from "../../Authentication/AuthProvider";
+import { Toaster, toast } from "react-hot-toast";
 
 const Login = () => {
+  const { login } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -18,7 +21,12 @@ const Login = () => {
 
   const onSubmit = (data) => {
     console.log(data);
-    // TODO: Handle login logic
+    login(data.email, data.password)
+      .then((result) => {
+        console.log(result?.user);
+        toast.success("Login successfully!");
+      })
+      .catch((error) => console.log(error?.message));
   };
 
   return (
@@ -70,7 +78,7 @@ const Login = () => {
               >
                 {showPassword ? (
                   <FaEye className="w-5 h-5 text-gray-400" />
-                  ) : (
+                ) : (
                   <FaEyeSlash className="w-5 h-5 text-gray-400" />
                 )}
               </button>
@@ -85,6 +93,7 @@ const Login = () => {
           >
             Sign In
           </button>
+          <Toaster/>
         </form>
         <div className="flex flex-col items-center justify-between mt-4">
           <button className="flex items-center justify-center py-3 px-3 w-full rounded-full bg-gray-100 hover:bg-gray-300 focus:outline-none">
