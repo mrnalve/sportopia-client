@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import sportLogo from "../../../public/soccer-ball.png";
+import { AuthContext } from "../../Authentication/AuthProvider";
 const Navbar = () => {
+  const {user} = useContext(AuthContext)
   // list item
   const menuItems = (
     <>

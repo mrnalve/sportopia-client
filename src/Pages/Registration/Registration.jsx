@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useForm } from "react-hook-form";
+import { AuthContext } from "../../Authentication/AuthProvider";
+import toast, { Toaster } from 'react-hot-toast';
+
 
 const Registration = () => {
+  const { createUser, updateUser } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -18,8 +22,18 @@ const Registration = () => {
   };
 
   const onSubmit = (data) => {
+    // call the create user function for registration
     console.log(data);
-    // TODO: Handle registration logic
+    createUser(data.email, data.password).then((result) => {
+        const loggedUser = result.user;
+        console.log(loggedUser);
+        updateUser(data.name, data.photoUrl)
+          .then(() => {
+            toast.success('Sign Up successfully!')
+          })
+          .catch((error) => console.log(error?.message));
+      })
+      .catch((error) => console.log(error?.message));
   };
 
   const password = watch("password");
@@ -206,6 +220,7 @@ const Registration = () => {
           >
             Register
           </button>
+          <Toaster/>
         </form>
         <div className="flex flex-col items-center justify-between mt-4">
           <Link
