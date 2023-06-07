@@ -4,7 +4,16 @@ import "./Navbar.css";
 import sportLogo from "../../../public/soccer-ball.png";
 import { AuthContext } from "../../Authentication/AuthProvider";
 const Navbar = () => {
-  const {user} = useContext(AuthContext)
+  const { user, logout } = useContext(AuthContext);
+  // handle logout
+  const handleLogout = (event) => {
+    event.preventDefault();
+    logout()
+      .then((result) => {
+        console.log(result?.user);
+      })
+      .catch((error) => console.log(error?.message));
+  };
   // list item
   const menuItems = (
     <>
@@ -17,9 +26,11 @@ const Navbar = () => {
       <li>
         <Link to={"/"}>Class</Link>
       </li>
-      <li>
-        <Link to={"/"}>Dashboard</Link>
-      </li>
+      {user && (
+        <li>
+          <Link to={"/"}>Dashboard</Link>
+        </li>
+      )}
     </>
   );
   return (
@@ -62,9 +73,15 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{menuItems}</ul>
       </div>
       <div className="navbar-end">
-        <Link to={"/login"}>
-          <button className="btn btn-grad text-white">Login</button>
-        </Link>
+        {user ? (
+          <button onClick={handleLogout} className="btn btn-grad text-white">
+            Log out
+          </button>
+        ) : (
+          <Link to={"/login"}>
+            <button className="btn btn-grad text-white">Login</button>
+          </Link>
+        )}
       </div>
     </div>
   );
