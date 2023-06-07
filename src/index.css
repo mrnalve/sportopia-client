@@ -12,7 +12,18 @@
 .geologica {
   font-family: 'Geologica', sans-serif;
 }
+.roboto{
+  font-family: 'Roboto', sans-serif;
+}
 .bg-black-primary {
   background-color: #0b0c10;
   color: #f6f6f6;
+}
+
+/* banner style */
+.banner-style {
+  @apply absolute top-0 left-0 h-full flex items-center bg-gradient-to-r from-[#0B0C10] to-transparent-black;
+}
+.banner-content-style{
+  @apply text-white space-y-4 md:w-1/2 md:pl-12 pl-4 text-left
 }
