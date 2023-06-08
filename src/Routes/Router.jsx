@@ -8,6 +8,9 @@ import Dashboard from "../Layout/Dashboard";
 import AdminHome from "../Pages/Dashboard/AdminHome/AdminHome";
 import ManageClasses from "../Pages/Dashboard/ManageClasses/ManageClasses";
 import ManageUsers from "../Pages/Dashboard/ManageUsers/ManageUsers";
+import AdminRoute from "./AdminRoute";
+import PrivateRoute from "./PrivateRoute";
+import AddClass from "../Pages/Dashboard/Instructor/AddClass/AddClass";
 
 export const router = createBrowserRouter([
   {
@@ -15,36 +18,62 @@ export const router = createBrowserRouter([
     element: <Main></Main>,
     children: [
       {
-        path: '/',
-        element: <Home></Home>
+        path: "/",
+        element: <Home></Home>,
       },
       {
-        path: '/login',
-        element: <Login></Login>
+        path: "/login",
+        element: <Login></Login>,
       },
       {
-        path: '/registration',
-        element: <Registration></Registration>
+        path: "/registration",
+        element: <Registration></Registration>,
       },
-    ]
+    ],
   },
   {
-    path: '/dashboard',
-    element: <Dashboard></Dashboard>,
-    children:[
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <Dashboard></Dashboard>
+      </PrivateRoute>
+    ),
+    children: [
+      // admin route
       {
-        path: 'adminHome',
-        element: <AdminHome></AdminHome>
+        path: "adminHome",
+        element: (
+          <AdminRoute>
+            <AdminHome></AdminHome>
+          </AdminRoute>
+        ),
       },
       {
-        path: 'manageUsers',
-        element: <ManageUsers></ManageUsers>
+        path: "manageUsers",
+        element: (
+          <AdminRoute>
+            <ManageUsers></ManageUsers>
+          </AdminRoute>
+        ),
       },
       {
-        path: 'manageClasses',
-        element: <ManageClasses></ManageClasses>
+        path: "manageClasses",
+        element: (
+          <AdminRoute>
+            <ManageClasses></ManageClasses>
+          </AdminRoute>
+        ),
       },
-    ]
-  }
+      // instructor route
+      {
+        path: "addClass",
+        element: <AddClass></AddClass>,
+      },
+      // student route
+      {
+        path: "mySelectedClasses",
+        element: <ManageClasses></ManageClasses>,
+      },
+    ],
+  },
 ]);
-

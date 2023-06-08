@@ -5,11 +5,12 @@ import useAdmin from "../hooks/useAdmin";
 
 const Dashboard = () => {
   // const isAdmin = true;
-  const [isAdmin] = useAdmin()
+  const [isAdmin, isAdminLoading] = useAdmin();
   console.log(isAdmin);
-  const isInstructor = false;
+  const isInstructor = true;
 
   return (
+    isAdminLoading ? <progress className="progress w-56 absolute left-[50%] -translate-x-1/2 top-[10%]"></progress>:
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col items-center justify-center bg-gradient-to-r from-[#0B0C10] to-[rgba(21, 21, 21, 0)]">
@@ -34,7 +35,7 @@ const Dashboard = () => {
                     ? `/dashboard/adminHome`
                     : isInstructor
                     ? "/dashboard/addClass"
-                    : "/dashboard/mySelectedClass"
+                    : "/dashboard/mySelectedClasses"
                 }
                 activeClassName="menu-item-active"
                 className="flex items-center py-2 px-4 rounded transition-colors duration-200 hover:bg-[#66FCF1] hover:text-black"

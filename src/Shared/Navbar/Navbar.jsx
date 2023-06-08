@@ -3,8 +3,11 @@ import { Link } from "react-router-dom";
 import "./Navbar.css";
 import sportLogo from "../../../public/soccer-ball.png";
 import { AuthContext } from "../../Authentication/AuthProvider";
+import useAdmin from "../../hooks/useAdmin";
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
+  const [isAdmin, isAdminLoading] = useAdmin();
+  const isInstructor = true;
   // handle logout
   const handleLogout = (event) => {
     event.preventDefault();
@@ -26,7 +29,17 @@ const Navbar = () => {
       </li>
       {user && (
         <li>
-          <Link to={"/dashboard/adminHome"}>Dashboard</Link>
+          <Link
+            to={`/dashboard/${
+              isAdmin
+                ? "adminHome"
+                : isInstructor
+                ? "addClass"
+                : "mySelectedClasses"
+            }`}
+          >
+            Dashboard
+          </Link>
         </li>
       )}
     </>
