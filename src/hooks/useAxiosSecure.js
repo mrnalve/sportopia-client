@@ -33,8 +33,9 @@ const useAxiosSecure = () => {
             async (error) => {
                 if (error.response && (error.response.status === 401 || error.response.status === 403)) {
                     toast.error(error?.response?.data?.error)
-                    await logout()
-                    navigate('/login')
+                    // TODO
+                    // await logout()
+                    // navigate('/login')
                 }
                 return Promise.reject(error);
             }

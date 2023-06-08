@@ -1,9 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useContext } from "react";
 import { toast } from "react-hot-toast";
 import { FaChalkboardTeacher, FaShieldAlt, FaTrashAlt } from "react-icons/fa";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { AuthContext } from "../../../Authentication/AuthProvider";
+import { Circles } from "react-loader-spinner";
 
 const ManageUsers = () => {
+  const { user } = useContext(AuthContext);
+  const [axiosSecure] = useAxiosSecure();
 
   // load user data
   const {
@@ -12,16 +17,24 @@ const ManageUsers = () => {
     refetch,
     error,
   } = useQuery({
-    queryKey: ["getUsers"],
+    queryKey: ["getUsers", user?.email],
     queryFn: async () => {
-      const response = await fetch(`http://localhost:5000/getUsers`);
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
+      const response = await axiosSecure(`/getUsers?email=${user?.email}`);
+      return response.data;
     },
   });
-  if (isLoading) return "Loading...";
+  if (isLoading)
+    return (
+      <Circles
+        height="80"
+        width="80"
+        color="#66FCF1"
+        ariaLabel="circles-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+      />
+    );
   if (error) return "An error has occurred: " + error.message;
 
   // handle make admin
@@ -80,7 +93,7 @@ const ManageUsers = () => {
                   ) : (
                     <button
                       // onClick={() => handleMakeInstructor(user)}
-                      disabled={user.role==='admin'? true : false}
+                      disabled={user.role === "admin" ? true : false}
                       className="btn btn-ghost btn-sm hover:bg-[#00f4e4] bg-[#66FCF1] text-white"
                     >
                       <FaChalkboardTeacher />
