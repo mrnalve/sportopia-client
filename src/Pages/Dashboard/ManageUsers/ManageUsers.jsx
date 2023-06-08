@@ -1,8 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import { toast } from "react-hot-toast";
 import { FaChalkboardTeacher, FaShieldAlt, FaTrashAlt } from "react-icons/fa";
 
 const ManageUsers = () => {
+
+  // load user data
   const {
     data: users = [],
     isLoading,
@@ -20,7 +23,22 @@ const ManageUsers = () => {
   });
   if (isLoading) return "Loading...";
   if (error) return "An error has occurred: " + error.message;
-  console.log(users);
+
+  // handle make admin
+  const handleMakeAdmin = (user) => {
+    fetch(`http://localhost:5000/users/admin/${user?._id}`, {
+      method: "PATCH",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.modifiedCount > 0) {
+          refetch();
+          toast.success(`${user?.name} is an Admin Now!`);
+        }
+      });
+  };
+
   return (
     <div className="w-full px-4">
       <h3 className="text-3xl font-semibold my-2 text-center text-white">
@@ -49,7 +67,7 @@ const ManageUsers = () => {
                     "admin"
                   ) : (
                     <button
-                      // onClick={() => handleMakeAdmin(user)}
+                      onClick={() => handleMakeAdmin(user)}
                       className="btn btn-ghost btn-sm hover:bg-[#00f4e4] bg-[#66FCF1] text-white"
                     >
                       <FaShieldAlt />
@@ -57,11 +75,12 @@ const ManageUsers = () => {
                   )}
                 </td>
                 <td className="p-4">
-                  {user.role === "admin" ? (
+                  {user.role === "instructor" ? (
                     "instructor"
                   ) : (
                     <button
-                      // onClick={() => handleMakeAdmin(user)}
+                      // onClick={() => handleMakeInstructor(user)}
+                      disabled={user.role==='admin'? true : false}
                       className="btn btn-ghost btn-sm hover:bg-[#00f4e4] bg-[#66FCF1] text-white"
                     >
                       <FaChalkboardTeacher />
