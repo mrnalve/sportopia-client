@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext } from "react";
-import { toast } from "react-hot-toast";
+import React, { useContext, useState } from "react";
 import { FaChalkboardTeacher, FaShieldAlt, FaTrashAlt } from "react-icons/fa";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { AuthContext } from "../../../Authentication/AuthProvider";
 import { Circles } from "react-loader-spinner";
+import { toast } from "react-hot-toast";
 
 const ManageUsers = () => {
   const { user } = useContext(AuthContext);
@@ -19,7 +19,7 @@ const ManageUsers = () => {
   } = useQuery({
     queryKey: ["getUsers", user?.email],
     queryFn: async () => {
-      const response = await axiosSecure(`/getUsers?email=${user?.email}`);
+      const response = await axiosSecure.get(`/getUsers?email=${user?.email}`);
       return response.data;
     },
   });
@@ -48,6 +48,20 @@ const ManageUsers = () => {
         if (data.modifiedCount > 0) {
           refetch();
           toast.success(`${user?.name} is an Admin Now!`);
+        }
+      });
+  };
+  // handle make Instructor
+  const handleMakeInstructor = (user) => {
+    fetch(`http://localhost:5000/users/instructor/${user?._id}`, {
+      method: "PATCH",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.modifiedCount > 0) {
+          refetch();
+          toast.success(`${user?.name} is an Instructor Now!`);
         }
       });
   };
@@ -80,6 +94,7 @@ const ManageUsers = () => {
                     "admin"
                   ) : (
                     <button
+                      disabled={user.role === "instructor"}
                       onClick={() => handleMakeAdmin(user)}
                       className="btn btn-ghost btn-sm hover:bg-[#00f4e4] bg-[#66FCF1] text-white"
                     >
@@ -91,13 +106,15 @@ const ManageUsers = () => {
                   {user.role === "instructor" ? (
                     "instructor"
                   ) : (
-                    <button
-                      // onClick={() => handleMakeInstructor(user)}
-                      disabled={user.role === "admin" ? true : false}
-                      className="btn btn-ghost btn-sm hover:bg-[#00f4e4] bg-[#66FCF1] text-white"
-                    >
-                      <FaChalkboardTeacher />
-                    </button>
+                    <>
+                      <button
+                        onClick={() => handleMakeInstructor(user)}
+                        disabled={user.role === "admin"}
+                        className="btn btn-ghost btn-sm hover:bg-[#00f4e4] bg-[#66FCF1] text-white"
+                      >
+                        <FaChalkboardTeacher />
+                      </button>
+                    </>
                   )}
                 </td>
                 <td className="p-4">

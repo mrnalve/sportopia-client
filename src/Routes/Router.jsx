@@ -67,12 +67,12 @@ export const router = createBrowserRouter([
       // instructor route
       {
         path: "addClass",
-        element: <AddClass></AddClass>,
+        element: <PrivateRoute><AddClass></AddClass></PrivateRoute>,
       },
       // student route
       {
         path: "mySelectedClasses",
-        element: <ManageClasses></ManageClasses>,
+        element: <PrivateRoute><ManageClasses></ManageClasses></PrivateRoute>,
       },
     ],
   },

@@ -2,15 +2,28 @@ import React from "react";
 import { FaBars, FaChalkboardTeacher, FaHome, FaUsers } from "react-icons/fa";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
+import { Circles } from "react-loader-spinner";
+import useInstructor from "../hooks/useInstructor";
 
 const Dashboard = () => {
   // const isAdmin = true;
   const [isAdmin, isAdminLoading] = useAdmin();
-  console.log(isAdmin);
-  const isInstructor = true;
+  const [isInstructor, isInstructorLoading] = useInstructor();
+  console.log(isInstructor);
 
-  return (
-    isAdminLoading ? <progress className="progress w-56 absolute left-[50%] -translate-x-1/2 top-[10%]"></progress>:
+  return isAdminLoading || isInstructorLoading ? (
+    <div className="absolute left-[50%] -translate-x-1/2 top-[50%] -translate-y-1/2">
+      <Circles
+        height="80"
+        width="80"
+        color="#66FCF1"
+        ariaLabel="circles-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+      />
+    </div>
+  ) : (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col items-center justify-center bg-gradient-to-r from-[#0B0C10] to-[rgba(21, 21, 21, 0)]">

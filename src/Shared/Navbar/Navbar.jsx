@@ -4,10 +4,11 @@ import "./Navbar.css";
 import sportLogo from "../../../public/soccer-ball.png";
 import { AuthContext } from "../../Authentication/AuthProvider";
 import useAdmin from "../../hooks/useAdmin";
+import useInstructor from "../../hooks/useInstructor";
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
-  const [isAdmin, isAdminLoading] = useAdmin();
-  const isInstructor = true;
+  const [isAdmin] = useAdmin();
+  const [isInstructor] = useInstructor();
   // handle logout
   const handleLogout = (event) => {
     event.preventDefault();
