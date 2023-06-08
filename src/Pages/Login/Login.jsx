@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import google from "../../../public/google.png";
@@ -15,6 +15,8 @@ const Login = () => {
     formState: { errors },
   } = useForm();
   const [showPassword, setShowPassword] = useState(false);
+  const location = useLocation()
+  const from = location?.state?.from?.pathname || "/";
 
   // handle show and hide password
   const handlePasswordVisibility = () => {
@@ -29,6 +31,7 @@ const Login = () => {
       .then((result) => {
         console.log(result?.user);
         toast.success("Login successfully!");
+        navigate(from, {replace: true})
       })
       .catch((error) => console.log(error?.message));
   };

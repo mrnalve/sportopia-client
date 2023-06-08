@@ -2,11 +2,13 @@ import React, { useContext } from "react";
 import google from "../../../public/google.png";
 import { AuthContext } from "../../Authentication/AuthProvider";
 import { toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SocialLogin = () => {
   const { googleSignIn } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation()
+  const from = location?.state?.from?.pathname || "/";
 
   // handle google sign in
   const handleGoogleSignIn = () => {
@@ -28,7 +30,7 @@ const SocialLogin = () => {
           .then((data) => {
             if (data.insertedId) {
               toast.success("Sign Up successfully!");
-              navigate("/");
+              navigate(from, {replace: true})
             }
           });
       })

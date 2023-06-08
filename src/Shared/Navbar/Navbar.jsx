@@ -9,6 +9,7 @@ const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
   const [isAdmin] = useAdmin();
   const [isInstructor] = useInstructor();
+  // something problem
   // handle logout
   const handleLogout = (event) => {
     event.preventDefault();
