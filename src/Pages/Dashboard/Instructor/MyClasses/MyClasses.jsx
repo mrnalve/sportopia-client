@@ -4,6 +4,7 @@ import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { FaTrashAlt } from "react-icons/fa";
 import { Circles } from "react-loader-spinner";
+import FeedbackCard from "../FeedbackCard/FeedbackCard";
 
 const MyClasses = () => {
   const { user, loading } = useContext(AuthContext);
@@ -38,7 +39,7 @@ const MyClasses = () => {
   return (
     <div className="w-full px-4">
       <h3 className="text-3xl font-semibold my-2 text-center text-white">
-        Total Classes?: {myClasses?.length}
+        Total Classes: {myClasses?.length}
       </h3>
       <div className="overflow-x-auto">
         <table className="table-auto w-11/12 m-auto rounded-xl">
@@ -58,15 +59,17 @@ const MyClasses = () => {
                 <td className="p-4">{item?.className}</td>
                 <td className="p-4">{item?.enrolledStudents}</td>
                 <td className="p-4">
-                  <button className={`btn btn-ghost btn-sm  text-white ${item?.status === 'pending' && 'bg-[#fc6666]'} ${item?.status === 'approved' && 'bg-[#24fff0]'}`}>
+                  <button
+                    className={`btn btn-ghost btn-sm  text-white ${
+                      item?.status === "pending" && "bg-[#fc6666]"
+                    } ${item?.status === "approved" && "bg-[#24fff0]"}`}
+                  >
                     {item?.status}
                   </button>
                 </td>
                 <td className="p-4">
-                  <button
-                    className="btn btn-ghost btn-sm hover:bg-red-700 bg-red-500 text-white"
-                  >
-                    <FaTrashAlt />
+                  <button className="btn btn-ghost btn-sm hover:bg-[#26dfd3] bg-gradient-to-r from-[#232630] to-[#45A29E] text-white">
+                    Update
                   </button>
                 </td>
               </tr>
@@ -74,6 +77,7 @@ const MyClasses = () => {
           </tbody>
         </table>
       </div>
+      {myClasses.feedback && <FeedbackCard></FeedbackCard>}
     </div>
   );
 };
