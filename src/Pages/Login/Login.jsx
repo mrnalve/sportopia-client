@@ -12,6 +12,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
   const [showPassword, setShowPassword] = useState(false);
@@ -29,8 +30,8 @@ const Login = () => {
     console.log(data);
     login(data.email, data.password)
       .then((result) => {
-        console.log(result?.user);
         toast.success("Login successfully!");
+        reset()
         navigate(from, {replace: true})
       })
       .catch((error) => console.log(error?.message));

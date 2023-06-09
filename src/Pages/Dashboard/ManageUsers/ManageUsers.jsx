@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useContext, useState } from "react";
 import { FaChalkboardTeacher, FaShieldAlt, FaTrashAlt } from "react-icons/fa";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -9,7 +9,7 @@ import { toast } from "react-hot-toast";
 const ManageUsers = () => {
   const { user } = useContext(AuthContext);
   const [axiosSecure] = useAxiosSecure();
-
+  const queryClient = useQueryClient();
   // load user data
   const {
     data: users = [],
@@ -37,6 +37,8 @@ const ManageUsers = () => {
     );
   if (error) return "An error has occurred: " + error.message;
 
+
+
   // handle make admin
   const handleMakeAdmin = (user) => {
     fetch(`http://localhost:5000/users/admin/${user?._id}`, {
@@ -44,10 +46,9 @@ const ManageUsers = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.modifiedCount > 0) {
-          refetch();
           toast.success(`${user?.name} is an Admin Now!`);
+          queryClient.invalidateQueries("manageClasses");
         }
       });
   };
@@ -58,10 +59,9 @@ const ManageUsers = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data.modifiedCount > 0) {
-          refetch();
           toast.success(`${user?.name} is an Instructor Now!`);
+          queryClient.invalidateQueries("manageClasses");
         }
       });
   };

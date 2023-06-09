@@ -45,6 +45,7 @@ const ManageClasses = () => {
       .then((data) => {
         toast.success("Approved Successfully!");
         console.log(data);
+        refetch()
       });
   };
 

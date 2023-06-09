@@ -33,7 +33,11 @@ const Registration = () => {
         console.log(loggedUser);
         updateUser(data.name, data.photoUrl)
           .then(() => {
-            const userInfo = { name: data.name, email: data.email };
+            const userInfo = {
+              name: data.name,
+              email: data.email,
+              image: data.photoUrl
+            }
             fetch("http://localhost:5000/users", {
               method: "POST",
               headers: {
