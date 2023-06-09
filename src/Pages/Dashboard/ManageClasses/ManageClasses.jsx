@@ -45,7 +45,7 @@ const ManageClasses = () => {
       .then((data) => {
         toast.success("Approved Successfully!");
         console.log(data);
-        refetch()
+        refetch();
       });
   };
 
@@ -91,7 +91,7 @@ const ManageClasses = () => {
                 disabled={
                   classes.status === "approve" || classes.status === "deny"
                 }
-                className="btn bg-[#45A29E] hover:bg-[#00756f] border-none text-white px-4 py-2 rounded-lg mr-2"
+                className={` ${classes.status === "approve" || classes.status === "deny" ? 'bg-gray-500 text-gray-400' : 'bg-[#45A29E] hover:bg-[#00756f] text-white'} border-none  px-4 py-2 rounded-lg mr-2`}
               >
                 Approve
               </button>
@@ -100,7 +100,7 @@ const ManageClasses = () => {
                 disabled={
                   classes.status === "approve" || classes.status === "deny"
                 }
-                className="bg-[#EF476F] hover:bg-[#b01237] text-white px-4 py-2 rounded-lg mr-2"
+                className={` ${classes.status === "approve" || classes.status === "deny" ? 'bg-gray-500 text-gray-400' : 'bg-[#EF476F] hover:bg-[#b01237] text-white'} border-none px-4 py-2 rounded-lg mr-2`}
               >
                 Deny
               </button>
