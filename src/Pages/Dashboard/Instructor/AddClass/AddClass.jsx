@@ -20,7 +20,7 @@ const AddClassForm = () => {
     const {
       className,
       instructorName,
-      instructorEmail,
+      email,
       sportsCategory,
       availableSeats,
       price,
@@ -39,7 +39,7 @@ const AddClassForm = () => {
           const newClass = {
             className,
             instructorName,
-            instructorEmail,
+            email,
             sportsCategory,
             availableSeats: parseInt(availableSeats),
             price: parseInt(price),
@@ -119,15 +119,15 @@ const AddClassForm = () => {
             </div>
             <div>
               <label
-                htmlFor="instructorEmail"
+                htmlFor="email"
                 className="text-sm text-gray-800 font-medium"
               >
                 Instructor email
               </label>
               <input
                 type="text"
-                id="instructorEmail"
-                {...register("instructorEmail", { required: true })}
+                id="email"
+                {...register("email", { required: true })}
                 value={user?.email}
                 readOnly
                 className="block w-full px-4 py-2 mt-2 text-gray-700 border rounded-lg bg-gray-100 focus:outline-none focus:ring"
