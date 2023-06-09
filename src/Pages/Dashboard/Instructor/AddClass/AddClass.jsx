@@ -44,6 +44,8 @@ const AddClassForm = () => {
             availableSeats: parseInt(availableSeats),
             price: parseInt(price),
             image: imageURL,
+            enrolledStudents: parseInt(0),
+            status: "pending",
           };
           // post method to send data in database
           fetch("http://localhost:5000/addClass", {
@@ -56,7 +58,7 @@ const AddClassForm = () => {
           }).then((data) => {
             console.log(data);
             if (data) {
-              console.log('success');
+              console.log("success");
               Swal.fire({
                 position: "top-end",
                 icon: "success",
