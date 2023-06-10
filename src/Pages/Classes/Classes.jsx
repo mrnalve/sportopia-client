@@ -56,6 +56,7 @@ const Classes = () => {
       return
     }
     const selectedClassInfo = {
+      itemId: classItem?._id,
       image: classItem?.image,
       className: classItem?.className,
       sportsCategory: classItem?.sportsCategory,
@@ -133,7 +134,7 @@ const Classes = () => {
               <button
                 onClick={() => handleSelect(classItem, user)}
                 disabled={
-                  classItem?.availableSeats <= 0 ||
+                  classItem?.availableSeats == 0 ||
                   loggedUser?.role === "admin" ||
                   loggedUser?.role === "instructor"
                 }
@@ -141,7 +142,7 @@ const Classes = () => {
                   loggedUser.role === "admin" ||
                   loggedUser.role === "instructor"
                     ? "bg-gray-500 text-gray-400"
-                    : "bg-[#45A29E] hover:bg-[#00756f] text-white cursor-pointer"
+                    : classItem?.availableSeats == 0 ? "bg-red-600 text-white": "bg-[#45A29E] hover:bg-[#00756f] text-white cursor-pointer"
                 } border-none  px-4 py-2 rounded-lg mr-2 font-medium`}
               >
                 Select Class

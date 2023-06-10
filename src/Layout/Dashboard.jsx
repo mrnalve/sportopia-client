@@ -5,6 +5,7 @@ import useAdmin from "../hooks/useAdmin";
 import { Circles } from "react-loader-spinner";
 import useInstructor from "../hooks/useInstructor";
 
+// TODO: Dashboard icon change
 const Dashboard = () => {
   // const isAdmin = true;
   const [isAdmin, isAdminLoading] = useAdmin();

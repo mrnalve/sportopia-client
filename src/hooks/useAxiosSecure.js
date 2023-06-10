@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../Authentication/AuthProvider";
 import { toast } from "react-toastify";
 
+const axiosSecure = axios.create({
+    baseURL: 'http://localhost:5000'
+})
 
 const useAxiosSecure = () => {
     const navigate = useNavigate();
     const { logout } = useContext(AuthContext);
-    const axiosSecure = axios.create({
-        baseURL: 'http://localhost:5000'
-    })
     useEffect(() => {
         // Intercept requests
         axiosSecure.interceptors.request.use(req => {

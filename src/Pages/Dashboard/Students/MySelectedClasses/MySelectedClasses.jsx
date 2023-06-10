@@ -4,6 +4,7 @@ import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { Circles } from "react-loader-spinner";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const MySelectedClasses = () => {
   const { user, loading } = useContext(AuthContext);
@@ -35,13 +36,37 @@ const MySelectedClasses = () => {
       />
     );
 
-  console.log(selectedClasses);
+  // delete selected class
+  const handleDelete = (item) => {
+    axiosSecure.delete(`/selectedClass/${item._id}`).then((res) => {
+      if (res.data.deletedCount > 0) {
+        Swal.fire({
+          title: "Are you sure?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              "Deleted!",
+              "Your selected class has been deleted.",
+              "success"
+            );
+            refetch()
+          }
+        });
+      }
+    });
+  };
 
   return (
     <div className="w-full px-4">
-      <h3 className="text-3xl font-semibold my-2 text-center text-white">
-        Total Classes: {selectedClasses?.length}
-      </h3>
+      <h2 className="text-3xl font-semibold text-white mb-6 text-left ml-10">
+        <span className="text-[#45A29E]"> Total Classes: </span>{" "}
+        {selectedClasses?.length}
+      </h2>
       <div className="overflow-x-auto">
         <table className="table-auto w-11/12 m-auto rounded-xl">
           <thead>
@@ -68,14 +93,19 @@ const MySelectedClasses = () => {
                 <td className="p-4">{item?.className}</td>
                 <td className="p-4">${item?.price}</td>
                 <td className="p-4">
-                  <button
-                    className="btn btn-ghost btn-sm hover:bg-[#26dfd3] bg-gradient-to-r from-[#232630] to-[#45A29E] text-white"
+                  <Link
+                    to={`/dashboard/payment?item=${btoa(JSON.stringify(item))}`}
                   >
-                    <Link to={'/dashboard/payment'}>Pay</Link>
-                  </button>
+                    <button className="btn btn-ghost btn-sm hover:bg-[#26dfd3] bg-gradient-to-r from-[#232630] to-[#45A29E] text-white">
+                      Pay
+                    </button>
+                  </Link>
                 </td>
                 <td className="p-4">
-                  <button className="btn btn-ghost btn-sm bg-[#fc6666] text-white">
+                  <button
+                    onClick={() => handleDelete(item)}
+                    className="btn btn-ghost btn-sm bg-[#fc6666] text-white"
+                  >
                     Delete
                   </button>
                 </td>

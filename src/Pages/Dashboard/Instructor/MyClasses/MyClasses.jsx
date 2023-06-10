@@ -47,6 +47,7 @@ const MyClasses = () => {
             <tr className="bg-gray-800 text-white text-center">
               <th className="p-4">ID</th>
               <th className="p-4">Class Name</th>
+              <th className="p-4">Available Seats</th>
               <th className="p-4">Enrolled Student</th>
               <th className="p-4">Status</th>
               <th className="p-4">Action</th>
@@ -57,12 +58,13 @@ const MyClasses = () => {
               <tr key={item._id} className={"bg-gray-100 pl-4 text-center"}>
                 <td className="p-4">{index + 1}</td>
                 <td className="p-4">{item?.className}</td>
+                <td className="p-4">{item?.availableSeats}</td>
                 <td className="p-4">{item?.enrolledStudents}</td>
                 <td className="p-4">
                   <button
-                    className={`btn btn-ghost btn-sm  text-white ${
-                      item?.status === "pending" && "bg-[#fc6666]"
-                    } ${item?.status === "approved" && "bg-[#24fff0]"}`}
+                    className={` btn-sm rounded-lg text-white ${
+                      item?.status === "pending" && "bg-[#e03030]"
+                    } ${item?.status === "approve" && "bg-[#53a8a5]"}`}
                   >
                     {item?.status}
                   </button>
