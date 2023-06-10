@@ -35,7 +35,6 @@ const useAxiosSecure = () => {
                     toast.error(error?.response?.data?.error)
                     // TODO
                     // await logout()
-                    // navigate('/login')
                 }
                 return Promise.reject(error);
             }

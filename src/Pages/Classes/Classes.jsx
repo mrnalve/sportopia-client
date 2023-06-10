@@ -3,10 +3,13 @@ import { AuthContext } from "../../Authentication/AuthProvider";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { Circles } from "react-loader-spinner";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const Classes = () => {
   const { user, loading } = useContext(AuthContext);
   const [axiosSecure] = useAxiosSecure();
+  const navigate = useNavigate()
   const {
     data: classes = [],
     loading: isLoading,
@@ -33,6 +36,46 @@ const Classes = () => {
       />
     );
   if (error) return "An error has occurred: " + error.message;
+
+  // handle select button
+  const handleSelect = (classItem, user) => {
+    if (!user || !user.email) {
+      Swal.fire({
+        title: 'Login Now?',
+        text: "You have to login first!",
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Login!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/login')
+        }
+        return
+      })
+      return
+    }
+    const selectedClassInfo = {
+      image: classItem?.image,
+      className: classItem?.className,
+      sportsCategory: classItem?.sportsCategory,
+      price: classItem?.price,
+      userEmail: user?.email
+    };
+    axiosSecure.post('/selectClass', selectedClassInfo).then(data=>{
+      console.log('after selecting new classes', data.data);
+      if (data.data.insertedId) {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: `Class added Successfully!`,
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    })
+
+  };
 
   // get logged user
   const { data: loggedUser = [] } = useQuery({
@@ -83,12 +126,12 @@ const Classes = () => {
                 {classItem?.availableSeats}
               </p>
               <p className="text-gray-300">
-                <span className="font-semibold">Price:</span> {classItem?.price}
+                <span className="font-semibold">Price:</span>${classItem?.price}
               </p>
             </div>
             <div className="mt-6">
               <button
-                onClick={() => handleApprove(classItem)}
+                onClick={() => handleSelect(classItem, user)}
                 disabled={
                   classItem?.availableSeats <= 0 ||
                   loggedUser?.role === "admin" ||

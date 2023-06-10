@@ -68,7 +68,7 @@ const Dashboard = () => {
                     ? `/dashboard/manageUsers`
                     : isInstructor
                     ? "/dashboard/myClasses"
-                    : "/dashboard/myEnrolledClass"
+                    : "/dashboard/myEnrolledClasses"
                 }
                 activeClassName="menu-item-active"
                 className="flex items-center py-2 px-4 rounded transition-colors duration-200 hover:bg-[#66FCF1] hover:text-black"
