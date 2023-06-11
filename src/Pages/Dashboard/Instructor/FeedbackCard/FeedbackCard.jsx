@@ -1,21 +1,24 @@
 import React from "react";
 
-const FeedbackCard = ({ name, comment }) => {
+const FeedbackCard = ({feedbackItem}) => {
   return (
-    <div className=" bg-[#0B0C10] rounded-lg shadow-lg p-4 w-4/5 m-auto my-4">
+    <div> 
+      <div className=" bg-[#0B0C10] rounded-lg shadow-lg p-4 w-4/5 m-auto my-4">
       <div className="flex items-center mb-4">
         <div className="flex-shrink-0">
           <img
-            src="avatar.png"
+            src={feedbackItem.itemImage}
             alt="User Avatar"
             className="w-10 h-10 rounded-full"
           />
         </div>
         <div className="ml-2">
-          <h4 className="text-lg font-semibold text-white">MD Rubayat</h4>
+          <h4 className="text-lg font-semibold text-white">{feedbackItem.className}</h4>
         </div>
       </div>
-      <p className="text-gray-300">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit, placeat labore hic blanditiis nostrum impedit autem atque! Vitae architecto facere ipsa non ducimus, sunt dolor praesentium deserunt quibusdam iure veniam.</p>
+      <h2 className="text-white text-xl font-bold">{feedbackItem.feedbackTitle}</h2>
+      <p className="text-gray-300">{feedbackItem.feedbackText}</p>
+    </div>
     </div>
   );
 };

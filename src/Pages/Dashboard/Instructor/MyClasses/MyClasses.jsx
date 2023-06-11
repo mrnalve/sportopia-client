@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../../../Authentication/AuthProvider";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import { FaTrashAlt } from "react-icons/fa";
 import { Circles } from "react-loader-spinner";
 import FeedbackCard from "../FeedbackCard/FeedbackCard";
 
@@ -13,7 +12,6 @@ const MyClasses = () => {
     data: myClasses = [],
     refetch,
     loading: isLoading,
-    error,
   } = useQuery({
     queryKey: ["myClasses", user?.email],
     enabled: !loading,
@@ -34,8 +32,19 @@ const MyClasses = () => {
         visible={true}
       />
     );
-  if (error) return "An error has occurred: " + error.message;
 
+  // get feedback data
+  const { data: feedback = [] } = useQuery({
+    queryKey: ["feedback", user?.email],
+    enabled: !loading,
+    queryFn: async () => {
+      const response = await axiosSecure.get(
+        `/getFeedback?email=${user?.email}`
+      );
+      return response.data;
+    },
+  });
+  console.log(feedback);
   return (
     <div className="w-full px-4">
       <h3 className="text-3xl font-semibold my-2 text-center text-white">
@@ -63,8 +72,10 @@ const MyClasses = () => {
                 <td className="p-4">
                   <button
                     className={` btn-sm rounded-lg text-white ${
-                      item?.status === "pending" && "bg-[#e03030]"
-                    } ${item?.status === "approve" && "bg-[#53a8a5]"}`}
+                      item?.status === "denied" && "bg-[#d12b25]"
+                    } ${item?.status === "pending" && "bg-[#22cde4]"} ${
+                      item?.status === "approve" && "bg-[#3dab45]"
+                    }`}
                   >
                     {item?.status}
                   </button>
@@ -79,7 +90,12 @@ const MyClasses = () => {
           </tbody>
         </table>
       </div>
-      {myClasses.feedback && <FeedbackCard></FeedbackCard>}
+      <div className="border min-h-[200px] rounded-md my-3">
+      <h3 className="text-3xl font-semibold my-2 text-center text-white">
+        Feedback(From Admin Panel)
+      </h3>
+      {feedback && feedback.map(feedbackItem => <FeedbackCard feedbackItem={feedbackItem}></FeedbackCard>)}
+      </div>
     </div>
   );
 };

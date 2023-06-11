@@ -82,7 +82,7 @@ const Dashboard = () => {
                   : "My Enrolled Classes"}
               </NavLink>
             </li>
-            {!isAdmin || !isInstructor ? (
+            {!isAdmin && !isInstructor ? (
               <li>
                 <NavLink
                 to={'/dashboard/paymentHistory'}

@@ -14,8 +14,6 @@ const ManageUsers = () => {
   const {
     data: users = [],
     isLoading,
-    refetch,
-    error,
   } = useQuery({
     queryKey: ["getUsers", user?.email],
     queryFn: async () => {
@@ -35,7 +33,6 @@ const ManageUsers = () => {
         visible={true}
       />
     );
-  if (error) return "An error has occurred: " + error.message;
 
 
 

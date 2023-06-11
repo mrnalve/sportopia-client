@@ -143,7 +143,7 @@ const Classes = () => {
                     : classItem?.availableSeats == 0
                     ? "bg-red-600 text-white"
                     : "bg-[#45A29E] hover:bg-[#00756f] text-white cursor-pointer"
-                } border-none  px-4 py-2 rounded-lg mr-2 font-medium`}
+                } border-none px-4 py-2 rounded-lg mr-2 font-medium`}
               >
                 Select Class
               </button>

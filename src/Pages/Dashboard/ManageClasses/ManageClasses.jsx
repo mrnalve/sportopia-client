@@ -3,10 +3,13 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { AuthContext } from "../../../Authentication/AuthProvider";
 import { useQuery } from "@tanstack/react-query";
 import { Toaster, toast } from "react-hot-toast";
+import Modal from "react-modal";
+import { Link } from "react-router-dom";
 
 const ManageClasses = () => {
   const { user, loading } = useContext(AuthContext);
   const [axiosSecure] = useAxiosSecure();
+
   const {
     data: manageClasses = [],
     refetch,
@@ -38,12 +41,24 @@ const ManageClasses = () => {
 
   //   handle approve
   const handleApprove = (classItem) => {
-    fetch(`http://localhost:5000/manageClasses/${classItem?._id}`, {
+    fetch(`http://localhost:5000/approve/${classItem?._id}`, {
       method: "PATCH",
     })
       .then((res) => res.json())
       .then((data) => {
         toast.success("Approved Successfully!");
+        console.log(data);
+        refetch();
+      });
+  };
+  //   handle Deny
+  const handleDeny = (classItem) => {
+    fetch(`http://localhost:5000/deny/${classItem?._id}`, {
+      method: "PATCH",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        toast.success("Denied Successfully!");
         console.log(data);
         refetch();
       });
@@ -89,23 +104,34 @@ const ManageClasses = () => {
               <button
                 onClick={() => handleApprove(classes)}
                 disabled={
-                  classes.status === "approve" || classes.status === "deny"
+                  classes.status === "approve" || classes.status === "denied"
                 }
-                className={` ${classes.status === "approve" || classes.status === "deny" ? 'bg-gray-500 text-gray-400' : 'bg-[#45A29E] hover:bg-[#00756f] text-white'} border-none  px-4 py-2 rounded-lg mr-2`}
+                className={` ${
+                  classes.status === "approve" || classes.status === "denied"
+                    ? "bg-gray-500 text-gray-400"
+                    : "bg-[#45A29E] hover:bg-[#00756f] text-white"
+                } border-none  px-4 py-2 rounded-lg mr-2`}
               >
                 Approve
               </button>
               <Toaster />
               <button
+                onClick={() => handleDeny(classes)}
                 disabled={
-                  classes.status === "approve" || classes.status === "deny"
+                  classes.status === "approve" || classes.status === "denied"
                 }
-                className={` ${classes.status === "approve" || classes.status === "deny" ? 'bg-gray-500 text-gray-400' : 'bg-[#EF476F] hover:bg-[#b01237] text-white'} border-none px-4 py-2 rounded-lg mr-2`}
+                className={` ${
+                  classes.status === "approve" || classes.status === "denied"
+                    ? "bg-gray-500 text-gray-400"
+                    : "bg-[#EF476F] hover:bg-[#b01237] text-white"
+                } border-none px-4 py-2 rounded-lg mr-2`}
               >
                 Deny
               </button>
               <button className="bg-[#4B5563] hover:bg-[#2b3038] text-white px-4 py-2 rounded-lg mt-2">
-                Send Feedback
+              <Link  to={`/dashboard/feedbackPage?classes=${btoa(
+                        JSON.stringify(classes)
+                      )}`}>Send Feedback</Link>
               </button>
             </div>
           </div>
