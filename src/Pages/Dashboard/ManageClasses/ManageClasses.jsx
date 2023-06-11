@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Toaster, toast } from "react-hot-toast";
 import Modal from "react-modal";
 import { Link } from "react-router-dom";
+import { Slide } from "react-awesome-reveal";
 
 const ManageClasses = () => {
   const { user, loading } = useContext(AuthContext);
@@ -14,7 +15,6 @@ const ManageClasses = () => {
     data: manageClasses = [],
     refetch,
     loading: isLoading,
-    error,
   } = useQuery({
     queryKey: ["manageClasses"],
     enabled: !loading,
@@ -37,7 +37,6 @@ const ManageClasses = () => {
         visible={true}
       />
     );
-  if (error) return "An error has occurred: " + error.message;
 
   //   handle approve
   const handleApprove = (classItem) => {
@@ -66,9 +65,11 @@ const ManageClasses = () => {
 
   return (
     <div>
-      <h2 className="text-3xl font-semibold text-white mb-6 text-left">
+      <Slide>
+      <h2 className="text-3xl font-semibold text-white mb-6 text-left my-4">
         <span className="text-[#45A29E]">Manage</span> Classes
       </h2>
+      </Slide>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {manageClasses.map((classes) => (
           <div className="bg-gradient-to-r from-[#0B0C10] to-[#616161] rounded-lg shadow-lg p-6">

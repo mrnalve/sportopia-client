@@ -3,7 +3,8 @@ import sportLogo from "../../../public/soccer-ball.png";
 
 const Footer = () => {
   return (
-    <footer className="footer p-10 bg-black-primary text-base-content grid grid-cols-1 md:grid-cols-4">
+    <footer>
+      <div className="footer p-10 bg-black-primary text-base-content grid grid-cols-1 md:grid-cols-4">
       <div className="md:w-4/5 geologica font-normal">
         <div className="flex items-center h-5 mb-3">
           <span className="text-xl font-extrabold text-white geologica h-5 pr-2 italic">
@@ -66,6 +67,12 @@ const Footer = () => {
             </svg>
           </a>
         </div>
+      </div>
+    </div>
+    <div className=" mx-auto text-center bg-black py-4 text-white">
+        <p className="text-sm">
+          &copy; {new Date().getFullYear()} Your Website Name. All rights reserved.
+        </p>
       </div>
     </footer>
   );

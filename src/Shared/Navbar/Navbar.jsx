@@ -5,6 +5,7 @@ import sportLogo from "../../../public/soccer-ball.png";
 import { AuthContext } from "../../Authentication/AuthProvider";
 import useAdmin from "../../hooks/useAdmin";
 import useInstructor from "../../hooks/useInstructor";
+import ThemeToggle from "../../Home/ThemeToggle/ThemeToggle";
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
   const [isAdmin] = useAdmin();
@@ -34,7 +35,7 @@ const Navbar = () => {
           <Link
             to={`/dashboard/${
               isAdmin
-                ? "adminHome"
+                ? "manageClasses"
                 : isInstructor
                 ? "addClass"
                 : "mySelectedClasses"
@@ -44,6 +45,9 @@ const Navbar = () => {
           </Link>
         </li>
       )}
+      <li>
+      <ThemeToggle></ThemeToggle>
+      </li>
     </>
   );
   return (

@@ -7,7 +7,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 const SocialLogin = () => {
   const { googleSignIn } = useContext(AuthContext);
   const navigate = useNavigate();
-  const location = useLocation()
+  const location = useLocation();
   const from = location?.state?.from?.pathname || "/";
 
   // handle google sign in
@@ -28,9 +28,10 @@ const SocialLogin = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            if (data.insertedId) {
+            console.log(data);
+            if (data) {
               toast.success("Sign Up successfully!");
-              navigate(from, {replace: true})
+              navigate(from, { replace: true });
             }
           });
       })

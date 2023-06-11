@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash, FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import google from "../../../public/google.png";
@@ -9,6 +9,8 @@ import SocialLogin from "../../Shared/SocialLogin/SocialLogin";
 
 const Login = () => {
   const { login } = useContext(AuthContext);
+  const [loginError , setLoginError] = useState('')
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -34,13 +36,14 @@ const Login = () => {
         reset()
         navigate(from, {replace: true})
       })
-      .catch((error) => console.log(error?.message));
+      .catch((error) => setLoginError(error?.message));
   };
 
   return (
     <div className="flex flex-col items-center justify-center bg-gradient-to-r from-[#0B0C10] to-[rgba(21, 21, 21, 0)] py-20">
-      <div className="w-1/4 px-6 py-12 bg-white rounded-lg shadow-lg">
+      <div className="md:w-1/4 px-6 py-12 bg-white rounded-lg shadow-lg">
         <h2 className="text-2xl font-semibold geologica text-center">Login</h2>
+        <p className="text-error font-normal">{loginError}</p>
         <form className="mt-8" onSubmit={handleSubmit(onSubmit)}>
           <div>
             <label
@@ -101,7 +104,6 @@ const Login = () => {
           >
             Sign In
           </button>
-          <Toaster />
         </form>
         <div className="flex flex-col items-center justify-between mt-4">
           <SocialLogin></SocialLogin>

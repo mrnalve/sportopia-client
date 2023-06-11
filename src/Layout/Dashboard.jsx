@@ -1,30 +1,25 @@
 import React from "react";
-import { FaBars, FaChalkboardTeacher, FaCheck, FaHome, FaUsers } from "react-icons/fa";
-import { NavLink, Outlet, useLocation } from "react-router-dom";
+import {
+  FaBars,
+  FaBook,
+  FaHistory,
+  FaHome,
+  FaListAlt,
+  FaPlus,
+  FaUsers,
+} from "react-icons/fa";
+import { TiTick } from "react-icons/ti";
+import { NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
-import { Circles } from "react-loader-spinner";
 import useInstructor from "../hooks/useInstructor";
 
-// TODO: Dashboard icon change
 const Dashboard = () => {
   // const isAdmin = true;
-  const [isAdmin, isAdminLoading] = useAdmin();
-  const [isInstructor, isInstructorLoading] = useInstructor();
+  const [isAdmin] = useAdmin();
+  const [isInstructor] = useInstructor();
   console.log(isInstructor);
 
-  return isAdminLoading || isInstructorLoading ? (
-    <div className="absolute left-[50%] -translate-x-1/2 top-[50%] -translate-y-1/2">
-      <Circles
-        height="80"
-        width="80"
-        color="#66FCF1"
-        ariaLabel="circles-loading"
-        wrapperStyle={{}}
-        wrapperClass=""
-        visible={true}
-      />
-    </div>
-  ) : (
+  return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col items-center justify-center bg-gradient-to-r from-[#0B0C10] to-[rgba(21, 21, 21, 0)]">
@@ -46,7 +41,7 @@ const Dashboard = () => {
               <NavLink
                 to={
                   isAdmin
-                    ? `/dashboard/adminHome`
+                    ? `/dashboard/manageClasses`
                     : isInstructor
                     ? "/dashboard/addClass"
                     : "/dashboard/mySelectedClasses"
@@ -54,12 +49,20 @@ const Dashboard = () => {
                 activeClassName="menu-item-active"
                 className="flex items-center py-2 px-4 rounded transition-colors duration-200 hover:bg-[#66FCF1] hover:text-black"
               >
-                <FaHome className="mr-2" />
-                {isAdmin
-                  ? "Admin Home"
-                  : isInstructor
-                  ? "Add a Class"
-                  : "My Selected Classes"}
+                {isAdmin ? (
+                  <>
+                    <FaHome className="mr-2" />
+                    Manage Classes
+                  </>
+                ) : isInstructor ? (
+                  <>
+                    <FaPlus className="mr-2" /> Add a Class
+                  </>
+                ) : (
+                  <>
+                    <TiTick /> My Selected Classes
+                  </>
+                )}
               </NavLink>
             </li>
             <li>
@@ -74,39 +77,34 @@ const Dashboard = () => {
                 activeClassName="menu-item-active"
                 className="flex items-center py-2 px-4 rounded transition-colors duration-200 hover:bg-[#66FCF1] hover:text-black"
               >
-                <FaUsers className="mr-2" />
-                {isAdmin
-                  ? "Manage Users"
-                  : isInstructor
-                  ? "My Classes"
-                  : "My Enrolled Classes"}
+                {isAdmin ? (
+                  <>
+                    <FaUsers className="mr-2" /> Manage Users
+                  </>
+                ) : isInstructor ? (
+                  <>
+                    <FaBook /> My Classes
+                  </>
+                ) : (
+                  <>
+                    <FaListAlt /> My Enrolled Classes
+                  </>
+                )}
               </NavLink>
             </li>
             {!isAdmin && !isInstructor ? (
               <li>
                 <NavLink
-                to={'/dashboard/paymentHistory'}
+                  to={"/dashboard/paymentHistory"}
                   activeClassName="menu-item-active"
                   className="flex items-center py-2 px-4 rounded transition-colors duration-200 hover:bg-[#66FCF1] hover:text-black"
                 >
-                  <FaCheck></FaCheck>
+                  <FaHistory></FaHistory>
                   Payment History
                 </NavLink>
               </li>
             ) : (
               ""
-            )}
-            {isAdmin && (
-              <li>
-                <NavLink
-                  to="/dashboard/manageClasses"
-                  activeClassName="menu-item-active"
-                  className="flex items-center py-2 px-4 rounded transition-colors duration-200 hover:bg-[#66FCF1] hover:text-black"
-                >
-                  <FaChalkboardTeacher className="mr-2" />
-                  Manage Classes
-                </NavLink>
-              </li>
             )}
             <hr className="text-white my-4" />
             <li>

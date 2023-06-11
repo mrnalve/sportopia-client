@@ -12,7 +12,7 @@ import { ToastContainer } from "react-toastify";
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <div className="max-w-full">
+  <div className="max-w-[1270px] mx-auto">
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <RouterProvider router={router} />

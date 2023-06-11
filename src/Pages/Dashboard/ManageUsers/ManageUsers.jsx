@@ -5,6 +5,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { AuthContext } from "../../../Authentication/AuthProvider";
 import { Circles } from "react-loader-spinner";
 import { toast } from "react-hot-toast";
+import { Slide } from "react-awesome-reveal";
 
 const ManageUsers = () => {
   const { user } = useContext(AuthContext);
@@ -65,9 +66,11 @@ const ManageUsers = () => {
 
   return (
     <div className="w-full px-4">
-      <h3 className="text-3xl font-semibold my-2 text-center text-white">
-        Total Users: {users.length}
-      </h3>
+      <Slide>
+      <h2 className="text-3xl font-semibold text-white mb-6 text-left my-4 ml-10">
+        <span className="text-[#45A29E]">All</span> Users
+      </h2>
+      </Slide>
       <div className="overflow-x-auto">
         <table className="table-auto w-11/12 m-auto rounded-xl">
           <thead>

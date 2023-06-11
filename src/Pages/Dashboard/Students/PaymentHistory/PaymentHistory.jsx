@@ -3,6 +3,7 @@ import { Circles } from "react-loader-spinner";
 import { AuthContext } from "../../../../Authentication/AuthProvider";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import { Slide } from "react-awesome-reveal";
 
 const PaymentHistory = () => {
     const { user, loading } = useContext(AuthContext);
@@ -35,7 +36,8 @@ const PaymentHistory = () => {
       );
 
   return (
-    <div className="container mx-auto p-4">
+    <Slide direction="left">
+      <div className="container mx-auto p-4">
      <h2 className="text-3xl font-semibold text-white mb-6 text-left">
         <span className="text-[#45A29E]">Payment </span> History
       </h2>
@@ -65,6 +67,7 @@ const PaymentHistory = () => {
         </div>
       )}
     </div>
+    </Slide>
   );
 };
 

@@ -5,9 +5,10 @@ import { useQuery } from "@tanstack/react-query";
 import { Circles } from "react-loader-spinner";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Slide } from "react-awesome-reveal";
 
 const MySelectedClasses = () => {
-  const { user, loading } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [axiosSecure] = useAxiosSecure();
   const {
     data: selectedClasses = [],
@@ -15,7 +16,6 @@ const MySelectedClasses = () => {
     loading: isLoading,
   } = useQuery({
     queryKey: ["selectedClasses", user?.email],
-    enabled: !loading,
     queryFn: async () => {
       const response = await axiosSecure.get(
         `/selectedClasses?email=${user?.email}`
@@ -35,7 +35,7 @@ const MySelectedClasses = () => {
         visible={true}
       />
     );
-
+    
   // delete selected class
   const handleDelete = (item) => {
     axiosSecure.delete(`/selectedClass/${item._id}`).then((res) => {
@@ -70,10 +70,12 @@ const MySelectedClasses = () => {
 
   return (
     <div className="w-full px-4">
-      <h2 className="text-3xl font-semibold text-white mb-6 text-left ml-10">
-        <span className="text-[#45A29E]"> Total Classes: </span>{" "}
-        {selectedClasses?.length}
-      </h2>
+      <Slide direction="left">
+        <h2 className="text-3xl font-semibold text-white mb-6 text-left ml-10">
+          <span className="text-[#45A29E]"> Total Classes: </span>{" "}
+          {selectedClasses?.length}
+        </h2>
+      </Slide>
       <div className="overflow-x-auto">
         <table className="table-auto w-11/12 m-auto rounded-xl">
           <thead>

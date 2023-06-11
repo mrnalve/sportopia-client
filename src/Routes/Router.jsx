@@ -19,11 +19,13 @@ import MyEnrolledClasses from "../Pages/Dashboard/Students/MyEnrolledClasses/MyE
 import Payment from "../Pages/Dashboard/Students/Payment/Payment";
 import PaymentHistory from "../Pages/Dashboard/Students/PaymentHistory/PaymentHistory";
 import FeedbackPage from "../Pages/Dashboard/AdminHome/FeedBackPage/FeedBackPage";
+import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         path: "/",
@@ -54,6 +56,7 @@ export const router = createBrowserRouter([
         <Dashboard></Dashboard>
       </PrivateRoute>
     ),
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       // admin route
       {

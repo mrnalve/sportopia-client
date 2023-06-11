@@ -4,6 +4,7 @@ import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { Circles } from "react-loader-spinner";
 import { Link } from "react-router-dom";
+import { Slide } from "react-awesome-reveal";
 
 const MyEnrolledClasses = () => {
   const { user, loading } = useContext(AuthContext);
@@ -35,12 +36,14 @@ const MyEnrolledClasses = () => {
       />
     );
 
-
   return (
     <div className="w-full px-4">
-      <h2 className="text-3xl font-semibold text-white mb-6 text-left ml-10">
-        <span className="text-[#45A29E]"> Enrolled Classes: </span> {paymentHistory?.length}
-      </h2>
+      <Slide direction="left" damping={0.1}>
+        <h2 className="text-3xl font-semibold text-white mb-6 text-left ml-10">
+          <span className="text-[#45A29E]"> Enrolled Classes: </span>{" "}
+          {paymentHistory?.length}
+        </h2>
+      </Slide>
       <div className="overflow-x-auto">
         <table className="table-auto w-11/12 m-auto rounded-xl">
           <thead>
