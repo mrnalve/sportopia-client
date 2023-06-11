@@ -54,11 +54,18 @@ const MySelectedClasses = () => {
               "Your selected class has been deleted.",
               "success"
             );
-            refetch()
+            refetch();
           }
         });
       }
     });
+  };
+  const handleSeats = (item) => {
+    console.log(item.availableSeats);
+    if (item.availableSeats <= 0) {
+      toast.error("Seats are not available");
+      return;
+    }
   };
 
   return (
@@ -93,13 +100,18 @@ const MySelectedClasses = () => {
                 <td className="p-4">{item?.className}</td>
                 <td className="p-4">${item?.price}</td>
                 <td className="p-4">
-                  <Link
-                    to={`/dashboard/payment?item=${btoa(JSON.stringify(item))}`}
+                  <button
+                    onClick={() => handleSeats(item)}
+                    className="btn btn-ghost btn-sm hover:bg-[#26dfd3] bg-gradient-to-r from-[#232630] to-[#45A29E] text-white"
                   >
-                    <button className="btn btn-ghost btn-sm hover:bg-[#26dfd3] bg-gradient-to-r from-[#232630] to-[#45A29E] text-white">
+                    <Link
+                      to={`/dashboard/payment?item=${btoa(
+                        JSON.stringify(item)
+                      )}`}
+                    >
                       Pay
-                    </button>
-                  </Link>
+                    </Link>
+                  </button>
                 </td>
                 <td className="p-4">
                   <button

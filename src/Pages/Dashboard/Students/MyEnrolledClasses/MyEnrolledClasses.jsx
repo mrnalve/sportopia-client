@@ -9,7 +9,7 @@ const MyEnrolledClasses = () => {
   const { user, loading } = useContext(AuthContext);
   const [axiosSecure] = useAxiosSecure();
   const {
-    data: enrolledClasses = [],
+    data: paymentHistory = [],
     refetch,
     loading: isLoading,
   } = useQuery({
@@ -39,7 +39,7 @@ const MyEnrolledClasses = () => {
   return (
     <div className="w-full px-4">
       <h2 className="text-3xl font-semibold text-white mb-6 text-left ml-10">
-        <span className="text-[#45A29E]"> Enrolled Classes: </span> {enrolledClasses?.length}
+        <span className="text-[#45A29E]"> Enrolled Classes: </span> {paymentHistory?.length}
       </h2>
       <div className="overflow-x-auto">
         <table className="table-auto w-11/12 m-auto rounded-xl">
@@ -49,11 +49,11 @@ const MyEnrolledClasses = () => {
               <th className="p-4">Image</th>
               <th className="p-4">Class Name</th>
               <th className="p-4">Price</th>
-              <th className="p-4">Transaction ID</th>
+              <th className="p-4">Sports Category</th>
             </tr>
           </thead>
           <tbody>
-            {enrolledClasses?.map((item, index) => (
+            {paymentHistory?.map((item, index) => (
               <tr key={item._id} className={"bg-gray-100 pl-4 text-center"}>
                 <td className="p-4">{index + 1}</td>
                 <td className="p-4">
@@ -65,7 +65,7 @@ const MyEnrolledClasses = () => {
                 </td>
                 <td className="p-4">{item?.className}</td>
                 <td className="p-4">${item?.price}</td>
-                <td className="p-4">{item?.TransactionId}</td>
+                <td className="p-4">{item?.sportsCategory}</td>
               </tr>
             ))}
           </tbody>

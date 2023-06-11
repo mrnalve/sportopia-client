@@ -1,5 +1,5 @@
 import React from "react";
-import { FaBars, FaChalkboardTeacher, FaHome, FaUsers } from "react-icons/fa";
+import { FaBars, FaChalkboardTeacher, FaCheck, FaHome, FaUsers } from "react-icons/fa";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import useAdmin from "../hooks/useAdmin";
 import { Circles } from "react-loader-spinner";
@@ -82,6 +82,20 @@ const Dashboard = () => {
                   : "My Enrolled Classes"}
               </NavLink>
             </li>
+            {!isAdmin || !isInstructor ? (
+              <li>
+                <NavLink
+                to={'/dashboard/paymentHistory'}
+                  activeClassName="menu-item-active"
+                  className="flex items-center py-2 px-4 rounded transition-colors duration-200 hover:bg-[#66FCF1] hover:text-black"
+                >
+                  <FaCheck></FaCheck>
+                  Payment History
+                </NavLink>
+              </li>
+            ) : (
+              ""
+            )}
             {isAdmin && (
               <li>
                 <NavLink

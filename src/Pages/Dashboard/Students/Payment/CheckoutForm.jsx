@@ -2,6 +2,7 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import React, { useContext, useEffect, useState } from "react";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import { AuthContext } from "../../../../Authentication/AuthProvider";
+import { Toaster, toast } from "react-hot-toast";
 
 const CheckoutForm = ({ item }) => {
   const [cardError, setCardError] = useState("");
@@ -64,6 +65,7 @@ const CheckoutForm = ({ item }) => {
       setTransactionId(paymentIntent.id);
       const payment = {
         email: user?.email,
+        date: new Date(),
         TransactionId: paymentIntent.id,
         price,
         className: item.className,
@@ -76,6 +78,7 @@ const CheckoutForm = ({ item }) => {
         .post("/payment", payment)
         .then((res) => {
           console.log(res.data);
+          toast.success('Payments Successfully!')
         })
         .catch((error) => {
           console.error("Error making payment:", error);
@@ -119,6 +122,7 @@ const CheckoutForm = ({ item }) => {
           >
             Pay
           </button>
+          <Toaster/>
         </div>
       </form>
       {cardError && (

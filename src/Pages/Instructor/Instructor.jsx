@@ -11,7 +11,6 @@ const Instructor = () => {
     data: instructors = [],
     refetch,
     loading: isLoading,
-    error,
   } = useQuery({
     queryKey: ["instructor"],
     enabled: !loading,
@@ -32,19 +31,18 @@ const Instructor = () => {
         visible={true}
       />
     );
-  if (error) return "An error has occurred: " + error.message;
 
   return isLoading || loading ? (
     <div className="relative h-[80vh] top-1/2 left-1/2">
       <Circles
-      height="80"
-      width="80"
-      color="#66FCF1"
-      ariaLabel="circles-loading"
-      wrapperStyle={{}}
-      wrapperClass=""
-      visible={true}
-    />
+        height="80"
+        width="80"
+        color="#66FCF1"
+        ariaLabel="circles-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+      />
     </div>
   ) : (
     <div className="bg-gradient-to-r from-[#0B0C10] to-[rgba(21, 21, 21, 0)] px-7 py-12">

@@ -9,12 +9,11 @@ import { useNavigate } from "react-router-dom";
 const Classes = () => {
   const { user, loading } = useContext(AuthContext);
   const [axiosSecure] = useAxiosSecure();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const {
     data: classes = [],
     loading: isLoading,
     refetch,
-    error,
   } = useQuery({
     queryKey: ["classes"],
     enabled: !loading,
@@ -35,47 +34,46 @@ const Classes = () => {
         visible={true}
       />
     );
-  if (error) return "An error has occurred: " + error.message;
 
   // handle select button
   const handleSelect = (classItem, user) => {
     if (!user || !user.email) {
       Swal.fire({
-        title: 'Login Now?',
+        title: "Login Now?",
         text: "You have to login first!",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Login!'
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Login!",
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate('/login')
+          navigate("/login");
         }
-        return
-      })
-      return
+        return;
+      });
+      return;
     }
     const selectedClassInfo = {
       itemId: classItem?._id,
       image: classItem?.image,
       className: classItem?.className,
       sportsCategory: classItem?.sportsCategory,
+      availableSeats: classItem?.availableSeats,
       price: classItem?.price,
-      userEmail: user?.email
+      userEmail: user?.email,
     };
-    axiosSecure.post('/selectClass', selectedClassInfo).then(data=>{
-      console.log('after selecting new classes', data.data);
+    axiosSecure.post("/selectClass", selectedClassInfo).then((data) => {
+      console.log("after selecting new classes", data.data);
       if (data.data.insertedId) {
         Swal.fire({
-          position: 'top-end',
-          icon: 'success',
+          position: "top-end",
+          icon: "success",
           title: `Class added Successfully!`,
           showConfirmButton: false,
-          timer: 1500
-        })
+          timer: 1500,
+        });
       }
-    })
-
+    });
   };
 
   // get logged user
@@ -142,7 +140,9 @@ const Classes = () => {
                   loggedUser.role === "admin" ||
                   loggedUser.role === "instructor"
                     ? "bg-gray-500 text-gray-400"
-                    : classItem?.availableSeats == 0 ? "bg-red-600 text-white": "bg-[#45A29E] hover:bg-[#00756f] text-white cursor-pointer"
+                    : classItem?.availableSeats == 0
+                    ? "bg-red-600 text-white"
+                    : "bg-[#45A29E] hover:bg-[#00756f] text-white cursor-pointer"
                 } border-none  px-4 py-2 rounded-lg mr-2 font-medium`}
               >
                 Select Class
