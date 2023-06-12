@@ -40,8 +40,11 @@ const ManageClasses = () => {
 
   //   handle approve
   const handleApprove = (classItem) => {
-    fetch(`http://localhost:5000/approve/${classItem?._id}`, {
+    fetch(`https://sportopia-server-side.vercel.app/approve/${classItem?._id}`, {
       method: "PATCH",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("access-token")}`,
+      },
     })
       .then((res) => res.json())
       .then((data) => {
@@ -52,8 +55,11 @@ const ManageClasses = () => {
   };
   //   handle Deny
   const handleDeny = (classItem) => {
-    fetch(`http://localhost:5000/deny/${classItem?._id}`, {
+    fetch(`https://sportopia-server-side.vercel.app/deny/${classItem?._id}`, {
       method: "PATCH",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("access-token")}`,
+      },
     })
       .then((res) => res.json())
       .then((data) => {

@@ -38,10 +38,11 @@ const Registration = () => {
               email: data.email,
               image: data.photoUrl
             }
-            fetch("http://localhost:5000/users", {
+            fetch("https://sportopia-server-side.vercel.app/users", {
               method: "POST",
               headers: {
                 "content-type": "application/json",
+                authorization: `bearer ${localStorage.getItem("access-token")}`,
               },
               body: JSON.stringify(userInfo),
             })

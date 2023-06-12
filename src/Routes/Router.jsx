@@ -20,6 +20,7 @@ import Payment from "../Pages/Dashboard/Students/Payment/Payment";
 import PaymentHistory from "../Pages/Dashboard/Students/PaymentHistory/PaymentHistory";
 import FeedbackPage from "../Pages/Dashboard/AdminHome/FeedBackPage/FeedBackPage";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
+import InstructorRoute from "./InstructorRoute";
 
 export const router = createBrowserRouter([
   {
@@ -94,11 +95,11 @@ export const router = createBrowserRouter([
       // instructor route
       {
         path: "addClass",
-        element: <PrivateRoute><AddClass></AddClass></PrivateRoute>,
+        element: <InstructorRoute><AddClass></AddClass></InstructorRoute>,
       },
       {
         path: "myClasses",
-        element: <PrivateRoute><MyClasses></MyClasses></PrivateRoute>,
+        element: <InstructorRoute><MyClasses></MyClasses></InstructorRoute>,
       },
       // student route
       {

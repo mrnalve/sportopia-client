@@ -12,10 +12,7 @@ const ManageUsers = () => {
   const [axiosSecure] = useAxiosSecure();
   const queryClient = useQueryClient();
   // load user data
-  const {
-    data: users = [],
-    isLoading,
-  } = useQuery({
+  const { data: users = [], isLoading } = useQuery({
     queryKey: ["getUsers", user?.email],
     queryFn: async () => {
       const response = await axiosSecure.get(`/getUsers?email=${user?.email}`);
@@ -35,12 +32,13 @@ const ManageUsers = () => {
       />
     );
 
-
-
   // handle make admin
   const handleMakeAdmin = (user) => {
-    fetch(`http://localhost:5000/users/admin/${user?._id}`, {
+    fetch(`https://sportopia-server-side.vercel.app/users/admin/${user?._id}`, {
       method: "PATCH",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("access-token")}`,
+      },
     })
       .then((res) => res.json())
       .then((data) => {
@@ -52,8 +50,11 @@ const ManageUsers = () => {
   };
   // handle make Instructor
   const handleMakeInstructor = (user) => {
-    fetch(`http://localhost:5000/users/instructor/${user?._id}`, {
+    fetch(`https://sportopia-server-side.vercel.app/users/instructor/${user?._id}`, {
       method: "PATCH",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("access-token")}`,
+      },
     })
       .then((res) => res.json())
       .then((data) => {
@@ -67,9 +68,9 @@ const ManageUsers = () => {
   return (
     <div className="w-full px-4">
       <Slide>
-      <h2 className="text-3xl font-semibold text-white mb-6 text-left my-4 ml-10">
-        <span className="text-[#45A29E]">All</span> Users
-      </h2>
+        <h2 className="text-3xl font-semibold text-white mb-6 text-left my-4 ml-10">
+          <span className="text-[#45A29E]">All</span> Users
+        </h2>
       </Slide>
       <div className="overflow-x-auto">
         <table className="table-auto w-11/12 m-auto rounded-xl">

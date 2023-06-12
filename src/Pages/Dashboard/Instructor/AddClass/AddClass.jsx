@@ -48,7 +48,7 @@ const AddClassForm = () => {
             status: "pending",
           };
           // post method to send data in database
-          fetch("http://localhost:5000/addClass", {
+          fetch(`https://sportopia-server-side.vercel.app/addClass?email=${user?.email}`, {
             method: "POST",
             headers: {
               "content-type": "application/json",
